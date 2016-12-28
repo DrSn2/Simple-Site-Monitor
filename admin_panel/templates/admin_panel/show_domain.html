@@ -1,0 +1,114 @@
+{% extends 'admin_panel/base_admin_panel.html' %}
+{% load staticfiles %}
+
+{% block title %} - {{ domain }}{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        {% include 'admin_panel/nav/panel-sidebar-navigation.html' %}
+
+        <div class="main-panel">
+            {% include 'admin_panel/nav/panel-top-navigation.html' %}
+
+            <div class="content">
+                <div class="container-fluid">
+
+                    {% include 'admin_panel/layout/message.html' %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Edit domain {{ domain }}</h4>
+                                </div>
+                                <div class="content">
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <table>
+                                            {{ form }}
+                                        </table>
+                                        <hr />
+                                        <button type="submit" class="btn btn-info btn-fill">Save</button>
+                                    </form>
+                                    <hr />
+                                    <a href="{% url 'admin_panel:delete_domain' domain.id %}" title="Delete {{ domain }}" class="btn btn-danger btn-fill" role="button">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 style="float: left" class="title">Links in domain {{ domain }}</h4>
+                                    <a style="float: right; font-size: 24px;" title="Add new link" href="{% url 'admin_panel:add_link' domain.id %}">
+                                        <i class="glyphicon glyphicon-plus-sign"></i>
+                                    </a>
+                                </div>
+                                <div class="content table-responsive table-full-width">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th>Link</th>
+                                            <th>Title</th>
+                                            <td></td>
+                                            <th>Description</th>
+                                            <td></td>
+                                            <th>H1</th>
+                                            <td></td>
+                                            <th>Last scan</th>
+                                            <th>Refresh</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for scan in scans %}
+                                                <a href="">
+                                                    <tr>
+                                                        <td>
+                                                            <a href="{% url 'admin_panel:show_link' scan.link.id %}">
+                                                                {{ scan.link.address }}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{ scan.link.title }}</td>
+                                                        <td>
+                                                            {% if scan.title_is_correct %}
+                                                                <i class="glyphicon glyphicon-ok"></i>
+                                                            {% else %}
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{ scan.link.description }}</td>
+                                                        <td>
+                                                            {% if scan.description_is_correct %}
+                                                                <i class="glyphicon glyphicon-ok"></i>
+                                                            {% else %}
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{ scan.link.h1 }}</td>
+                                                        <td>
+                                                            {% if scan.h1_is_correct %}
+                                                                <i class="glyphicon glyphicon-ok"></i>
+                                                            {% else %}
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>{{ scan.timestamp }}</td>
+                                                        <td>
+                                                            <a href="{% url 'scanner_engine:scan_link' scan.link.id domain.id %}">
+                                                                <i class="glyphicon glyphicon-refresh"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </a>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'admin_panel/layout/content_footer.html' %}
+        </div>
+    </div>
+{% endblock %}

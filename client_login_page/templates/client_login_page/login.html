@@ -1,0 +1,59 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie - iCEA Brief</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <!-- Bootstrap core CSS     -->
+{#    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet"/>#}
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+    <!-- Custom styles -->
+    <style>
+        .img-round {border-radius: 50%;}
+        .alert-danger {
+            color: red;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            min-height: 30px;
+            margin: 20px 0;
+            background-color: rgba(60,20,20,.3);
+            border-radius: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="login">
+    <div style="display: flex; justify-content: center; margin: 20px 0;">
+        <img class="img-round" src="{% static 'assets/img/logo.png' %}" alt="SSM Logo" title="Simple Site Monitor" height="90">
+    </div>
+    {% if message %}
+        <div class="alert {{ message_class }}" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
+    </form>
+</div>
+</body>
+
+<!--   Core JS Files   -->
+<script src="{% static 'assets/js/jquery-1.10.2.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/index.js' %}"></script>
+
+</html>

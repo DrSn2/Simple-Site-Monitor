@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<div class="sidebar" data-color="orange" data-image="{% static 'assets/img/sidebar.gif' %}">
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="{% url 'admin_panel:panel' %}" class="simple-text">
+                <img src="{% static 'assets/img/logo.png' %}" height="50" alt="Simple Site Monitor Logo"
+                     style="margin: 10px; border-radius: 50%;"/>
+                S-S-M
+            </a>
+        </div>
+
+        <ul class="nav">
+            <li {% if view == 'panel' %}class="active"{% endif %}>
+                <a href="{% url 'admin_panel:panel' %}">
+                    <i class="pe-7s-graph"></i>
+                    <p>Domains</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+{% extends 'admin_panel/base_admin_panel.html' %}
+{% load staticfiles %}
+
+{% block title %} - domains{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        {% include 'admin_panel/nav/panel-sidebar-navigation.html' with view='panel' %}
+
+        <div class="main-panel">
+            {% include 'admin_panel/nav/panel-top-navigation.html' %}
+
+            <div class="content">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                              <div class="panel-body">
+                                  <a style="color: white;" title="Add new domain" href="{% url 'admin_panel:add_domain' %}">
+                                      <button class="btn btn-fill btn-primary">
+                                          Add Domain
+                                      </button>
+                                  </a>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Domains</h4>
+                                </div>
+                                <div class="content table-responsive table-full-width">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th>Domain</th>
+                                            <th>Link</th>
+                                            <td>Status</td>
+                                        </thead>
+                                        <tbody>
+                                            {% for site in sites_and_links %}
+                                                <tr>
+                                                    <td>
+                                                        <a title="{{ site.domain }}" href="{% url 'admin_panel:show_domain' site.domain.id %}">
+                                                            <b>{{ site.domain.domain }}</b>
+                                                        </a>
+                                                    </td>
+                                                    <td><a title="Add new link" href="{% url 'admin_panel:add_link' site.domain.id %}"><i class="glyphicon glyphicon-plus-sign"></i></a></td>
+                                                    <td></td>
+                                                </tr>
+                                                {% for scan in site.scans %}
+                                                    <tr>
+                                                        <td>-></td>
+                                                        <td>{{ scan.link.address }}</td>
+                                                        <td>
+                                                            {% if scan.is_correct %}
+                                                                <i class="glyphicon glyphicon-ok"></i>
+                                                            {% else %}
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'admin_panel/layout/content_footer.html' %}
+        </div>
+    </div>
+{% endblock %}
