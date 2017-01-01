@@ -52,6 +52,7 @@ class AddDomain(View):
             'message_class': None
         }
         form = AddDomainForm(request.POST)
+        new_domain = None
 
         try:
             if form.is_valid():
@@ -86,6 +87,9 @@ class AddDomain(View):
 
         except Exception as e:
             print e
+            # Delete new domain if error occurred
+            if new_domain:
+                new_domain.delete()
             context['message'] = 'Unexpected error occurred!'
             context['message_class'] = 'alert-danger'
             context['form'] = form
