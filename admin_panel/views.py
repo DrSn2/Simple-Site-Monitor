@@ -167,6 +167,7 @@ class ShowDomain(View):
             scan.title_is_correct = scan.title_is_correct()
             scan.description_is_correct = scan.description_is_correct()
             scan.h1_is_correct = scan.h1_is_correct()
+            scan.custom_code_is_correct = scan.contains_custom_code
             scans.append(scan)
 
         form = AddDomainForm(instance=parent_domain)

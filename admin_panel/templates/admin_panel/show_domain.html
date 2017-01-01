@@ -55,6 +55,7 @@
                                             <th>H1</th>
                                             <td></td>
                                             <th>Last scan</th>
+                                            <th>Custom code</th>
                                             <th>Refresh</th>
                                         </thead>
                                         <tbody>
@@ -91,6 +92,13 @@
                                                             {% endif %}
                                                         </td>
                                                         <td>{{ scan.timestamp }}</td>
+                                                        <td>
+                                                            {% if scan.custom_code_is_correct %}
+                                                                <i class="glyphicon glyphicon-ok"></i>
+                                                            {% else %}
+                                                                <i class="glyphicon glyphicon-remove"></i>
+                                                            {% endif %}
+                                                        </td>
                                                         <td>
                                                             <a href="{% url 'scanner_engine:scan_link' scan.link.id domain.id %}">
                                                                 <i class="glyphicon glyphicon-refresh"></i>
