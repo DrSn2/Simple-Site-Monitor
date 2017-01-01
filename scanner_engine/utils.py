@@ -18,7 +18,8 @@ def get_description(html):
 def get_h1(html):
     soup = BeautifulSoup(html)
     h1 = soup.find('h1')
-    h1 = h1.string.strip() if h1 else ''
+    h1 = h1.get_text() if h1 else ''
+    h1 = "".join(h1.split())
     return h1
 
 
