@@ -1,7 +1,7 @@
 from celery import task
 from sites_and_links.models import Link
 from .models import LinkScan
-from .utils import get_title, get_description, get_h1
+from .utils import get_title, get_description, get_h1, find_custom_code
 import requests
 
 
@@ -35,6 +35,11 @@ def scan_link(link_id):
     scan_result.title = get_title(response.content)
     scan_result.description = get_description(response.content)
     scan_result.h1 = get_h1(response.content)
+
+    # Look for custom code if necessary
+    if link.custom_code != '':
+        scan_result.contains_custom_code = find_custom_code(response.content, link.custom_code)
+
     scan_result.save()
 
     return True
