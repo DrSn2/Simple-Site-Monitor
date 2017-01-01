@@ -20,3 +20,16 @@ def get_h1(html):
     h1 = soup.find('h1')
     h1 = h1.string.strip() if h1 else ''
     return h1
+
+
+def find_custom_code(html, custom_code):
+    # Remove white spaces and lower
+    html = "".join(html.split())
+    custom_code = "".join(custom_code.split())
+    html = html.lower()
+    custom_code = custom_code.lower()
+
+    if custom_code in html:
+        return True
+    else:
+        return False
