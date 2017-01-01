@@ -8,6 +8,7 @@ class LinkScan(models.Model):
     title = models.CharField(null=False, blank=True, default='', max_length=400)
     description = models.CharField(null=False, blank=True, default='', max_length=500)
     h1 = models.CharField(null=False, blank=True, default='', max_length=200)
+    contains_custom_code = models.BooleanField(blank=True, default=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __unicode__(self):
@@ -24,4 +25,4 @@ class LinkScan(models.Model):
         return self.h1 == self.link.h1
 
     def everything_is_correct(self):
-        return self.title == self.link.title and self.description == self.link.description and self.h1 == self.link.h1
+        return self.title == self.link.title and self.description == self.link.description and self.h1 == self.link.h1 and self.contains_custom_code
