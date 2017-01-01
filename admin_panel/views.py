@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from sites_and_links.models import Domain, Link
 from .forms import AddDomainForm, AddLinkForm
 from scanner_engine.tasks import scan_link
@@ -7,6 +9,7 @@ from scanner_engine.models import LinkScan
 
 
 # Display list of domains and links
+@method_decorator(login_required, name='dispatch')
 class ListDomains(View):
     template_name = 'admin_panel/dashboard.html'
 
@@ -34,6 +37,7 @@ class ListDomains(View):
 
 
 # Add new domain
+@method_decorator(login_required, name='dispatch')
 class AddDomain(View):
     template_name = 'admin_panel/add_domain.html'
 
@@ -90,6 +94,7 @@ class AddDomain(View):
 
 
 # Add new link for the given domain
+@method_decorator(login_required, name='dispatch')
 class AddLink(View):
     template_name = 'admin_panel/add_link.html'
 
@@ -142,6 +147,7 @@ class AddLink(View):
 
 
 # Show and edit domain
+@method_decorator(login_required, name='dispatch')
 class ShowDomain(View):
     template_name = 'admin_panel/show_domain.html'
 
@@ -215,6 +221,7 @@ class ShowDomain(View):
 
 
 # Show and edit specific link for the given domain
+@method_decorator(login_required, name='dispatch')
 class ShowLink(View):
     template_name = 'admin_panel/show_link.html'
 
@@ -289,6 +296,7 @@ class ShowLink(View):
         return render(request, self.template_name, context)
 
 
+@method_decorator(login_required, name='dispatch')
 class DeleteDomain(View):
 
     def get(self, request, domain_id):

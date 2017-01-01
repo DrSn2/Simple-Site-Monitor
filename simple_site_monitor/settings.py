@@ -141,3 +141,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+# Auth
+LOGIN_REDIRECT_URL = 'client_login_page:client_login'
+LOGIN_URL = 'client_login_page:client_login'
