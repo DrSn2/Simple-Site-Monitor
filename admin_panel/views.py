@@ -16,7 +16,7 @@ class ListDomains(View):
     def get(self, request):
         sites_and_links = []
 
-        for domain in Domain.objects.all():
+        for domain in Domain.objects.filter(user=request.user):
             links = Link.objects.filter(domain=domain)
             scans = []
             for link in links:
